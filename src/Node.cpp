@@ -189,7 +189,7 @@ void ros_common::Node::printTopicInfo()
   std::string   nodeName = ros::this_node::getName();
   ros::V_string topics;
   ros::this_node::getSubscribedTopics(topics);
-  std::string       topicsStr = nodeName + ":\n\tsubscribed to topics:\n";
+  std::string   topicsStr = "\n\tnode name: " + nodeName + ":\n\tsubscribed to topics:\n";
 
   for (unsigned int i         = 0; i < topics.size(); i++)
   {
