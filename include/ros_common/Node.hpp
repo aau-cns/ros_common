@@ -46,6 +46,7 @@ namespace ros_common
       {
         mbIsInitialized = false;
         mbHasNewMessage = false;
+        mbSpinningProcess = false;
       }
 
     public:
@@ -100,7 +101,7 @@ namespace ros_common
 
 
       std::atomic<bool> mbHasNewMessage;
-
+      std::atomic<bool> mbSpinningProcess;  // for a node that does the process loop iteratively without new messages
       float mPeriod_s;
 
       bool mbProfile = true;

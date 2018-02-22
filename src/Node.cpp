@@ -46,7 +46,7 @@ void ros_common::Node::run()
   {
     ros::spinOnce();
 
-    if(mbHasNewMessage)
+    if(mbHasNewMessage || mbSpinningProcess)
     {
       if(!mbIsInitialized)
       {
