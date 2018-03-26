@@ -43,7 +43,7 @@ namespace ros_common
 
       virtual bool update_()
       {
-        return false;
+        return true;
       }
 
 
