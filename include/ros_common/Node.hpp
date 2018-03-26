@@ -107,7 +107,7 @@ namespace ros_common
       bool mbProfile = true;
 
     private:
-      bool mbIsInitialized;
+      std::atomic<bool> mbIsInitialized;
 
       Node();
 
