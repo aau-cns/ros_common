@@ -12,6 +12,7 @@ find_package(catkin REQUIRED COMPONENTS
   sensor_msgs
   message_generation
   message_runtime
+  dynamic_reconfigure
 )
 
 ## System dependencies are found with CMake's conventions
@@ -105,7 +106,7 @@ find_package(catkin REQUIRED COMPONENTS
 catkin_package(
   INCLUDE_DIRS include
   LIBRARIES ${lib_name}
-  CATKIN_DEPENDS roscpp std_msgs  message_runtime
+  CATKIN_DEPENDS roscpp std_msgs message_runtime message_generation dynamic_reconfigure
   DEPENDS
 )
 
@@ -115,6 +116,7 @@ catkin_package(
 
 set(ROS_SOURCES_FILES
   "include/ros_common/Node.hpp"
+  "include/ros_common/ROSdynamic.hpp"
   "src/Node.cpp"
   "include/ros_common/InitSubscriber.hpp"
 )
