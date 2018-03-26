@@ -1,7 +1,7 @@
 /**
  * @licence MIT
  *
- * @file  Node.hpp
+ * @file  INode.hpp
  *
  * @brief  refactored pfe_node.h
  *
@@ -9,8 +9,8 @@
  *
  * @date  14.12.2016
  */
-#ifndef ROS_COMMON_NODE_HPP
-#define ROS_COMMON_NODE_HPP
+#ifndef ROS_COMMON_INODE_HPP
+#define ROS_COMMON_INODE_HPP
 #include <cassert>
 #include <ros/ros.h>
 #include <cstdint>
@@ -27,6 +27,8 @@ namespace ros_common
    * abstract baseclass for node with custom spinning
    * order of execution of virtual methods:
    *  init_topics() subscribe and publish topics, initialize message independet stuff
+   *  print_topic_info()
+   *  load_config()
    *
    *  init() called after first message is arrived
    *  process() called with each message
@@ -39,10 +41,10 @@ namespace ros_common
    *   node_warn_time: warn if no message arrived in X s. default 15 (0 do disable)
    *
    */
-  class Node
+  class INode
   {
     protected:
-      Node(ros::NodeHandle &nh) : mNh(nh)
+      INode(ros::NodeHandle &nh) : mNh(nh)
       {
         mbIsInitialized = false;
         mbHasNewMessage = false;
@@ -115,11 +117,11 @@ namespace ros_common
     private:
       std::atomic<bool> mbIsInitialized;
 
-      Node();
+      INode();
 
-      Node(const Node &);
+      INode(const INode &);
 
-      Node &operator=(const Node &);
+      INode &operator=(const INode &);
 
       /**
        * Print all subscritpions and advertations
@@ -130,4 +132,4 @@ namespace ros_common
 
 } // namespace ros_common
 
-#endif // ROS_COMMON_NODE_HPP
+#endif // ROS_COMMON_INODE_HPP

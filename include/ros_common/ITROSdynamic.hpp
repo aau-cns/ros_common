@@ -1,7 +1,7 @@
 /**
  * Copyright (C) 2016 by Austrian Institute of Technology
  *
- * @file  ROSdynamic.hpp
+ * @file  ITROSdynamic.hpp
  *
  * @brief Automatically binds the dynamic reconfig server with the concrete callback.
  *        The user needs to implement update_(...) which updates the internal states.
@@ -10,8 +10,8 @@
  *
  * @date  19.10.2016
  */
-#ifndef ROS_COMMON_ROSDYNAMIC_HPP
-#define ROS_COMMON_ROSDYNAMIC_HPP
+#ifndef ROS_COMMON_ITROSDYNAMIC_HPP
+#define ROS_COMMON_ITROSDYNAMIC_HPP
 
 #include <dynamic_reconfigure/server.h>
 
@@ -20,13 +20,13 @@ namespace ros_common
 
   // abstract template class
   template < typename T>
-  class ROSdynamic
+  class ITROSdynamic
   {
     public:
 
-      ROSdynamic()
+      ITROSdynamic()
       {
-        mFunc = boost::bind(&ROSdynamic::callback, this, _1, _2);
+        mFunc = boost::bind(&ITROSdynamic::callback, this, _1, _2);
         mServer.setCallback(mFunc);
       }
 
@@ -52,9 +52,10 @@ namespace ros_common
       typename dynamic_reconfigure::Server<T>::CallbackType mFunc;
 
       T mDynConfig;
-  }; // class ROSdynamic
+
+  }; // class ITROSdynamic
 
 } // namespace ros_common
 
 
-#endif // ROS_COMMON_ROSDYNAMIC_HPP
+#endif // ROS_COMMON_ITROSDYNAMIC_HPP

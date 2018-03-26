@@ -10,10 +10,10 @@
  *
  * @date  14.12.2016
  */
-#include "../include/ros_common/Node.hpp"
+#include "../include/ros_common/INode.hpp"
 
 
-void ros_common::Node::run()
+void ros_common::INode::run()
 {
   init_topics();  // 1
   print_topic_info();
@@ -94,31 +94,31 @@ void ros_common::Node::run()
   }
 }
 
-void ros_common::Node::set_profile(const bool val)
+void ros_common::INode::set_profile(const bool val)
 {
   mbProfile = val;
 }
 
-bool ros_common::Node::is_initialized()
+bool ros_common::INode::is_initialized()
 {
   return mbIsInitialized;
 }
 
-void ros_common::Node::get_param_u32(const std::string &key, std::uint32_t &value, const std::uint32_t &def)
+void ros_common::INode::get_param_u32(const std::string &key, std::uint32_t &value, const std::uint32_t &def)
 {
   int _val;
   mNh.param<int>(key, _val, def);
   value = static_cast<std::uint32_t>(_val);
 }
 
-void ros_common::Node::get_param_s16(const std::string &key, std::int16_t &value, const std::int16_t &def)
+void ros_common::INode::get_param_s16(const std::string &key, std::int16_t &value, const std::int16_t &def)
 {
   int _val;
   mNh.param<int>(key, _val, def);
   value = static_cast<std::int16_t>(_val);
 }
 
-void ros_common::Node::param_get_string(std::string &variable, const std::string &param, const std::string &default_value)
+void ros_common::INode::param_get_string(std::string &variable, const std::string &param, const std::string &default_value)
 {
   XmlRpc::XmlRpcValue xmlValue;
   mNh.getParam(param, xmlValue);
@@ -136,7 +136,7 @@ void ros_common::Node::param_get_string(std::string &variable, const std::string
   }
 }
 
-void ros_common::Node::param_get_int(int &variable, const std::string &param, const int &default_value)
+void ros_common::INode::param_get_int(int &variable, const std::string &param, const int &default_value)
 {
   XmlRpc::XmlRpcValue xmlValue;
   mNh.getParam(param, xmlValue);
@@ -153,7 +153,7 @@ void ros_common::Node::param_get_int(int &variable, const std::string &param, co
   }
 }
 
-void ros_common::Node::param_get_uint(unsigned &variable, const std::string &param, const unsigned &default_value)
+void ros_common::INode::param_get_uint(unsigned &variable, const std::string &param, const unsigned &default_value)
 {
   XmlRpc::XmlRpcValue xmlValue;
   mNh.getParam(param, xmlValue);
@@ -170,7 +170,7 @@ void ros_common::Node::param_get_uint(unsigned &variable, const std::string &par
   }
 }
 
-void ros_common::Node::param_get_float(float &variable, const std::string &param, const float &default_value)
+void ros_common::INode::param_get_float(float &variable, const std::string &param, const float &default_value)
 {
   XmlRpc::XmlRpcValue xmlValue;
   mNh.getParam(param, xmlValue);
@@ -187,7 +187,7 @@ void ros_common::Node::param_get_float(float &variable, const std::string &param
   }
 }
 
-void ros_common::Node::print_topic_info()
+void ros_common::INode::print_topic_info()
 {
   //  print published/subscribed topics
   std::string   nodeName = ros::this_node::getName();

@@ -115,9 +115,9 @@ catkin_package(
 ###########
 
 set(ROS_SOURCES_FILES
-  "include/ros_common/Node.hpp"
-  "include/ros_common/ROSdynamic.hpp"
-  "src/Node.cpp"
+  "include/ros_common/INode.hpp"
+  "include/ros_common/ITROSdynamic.hpp"
+  "src/INode.cpp"
   "include/ros_common/InitSubscriber.hpp"
 )
 
