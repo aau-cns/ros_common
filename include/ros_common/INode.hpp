@@ -26,12 +26,11 @@ namespace ros_common
   /**
    * abstract baseclass for node with custom spinning
    * order of execution of virtual methods:
-   *  init_topics() subscribe and publish topics, initialize message independet stuff
-   *  print_topic_info()
-   *  load_config()
-   *
-   *  init() called after first message is arrived
-   *  process() called with each message
+   *  1) init_topics() subscribe and publish topics, initialize message independet stuff
+   *  1.1) print_topic_info()
+   *  2) load_config()
+   *  3) init() called after first message is arrived
+   *  4) process() called with each message
    *
    *  signal run() that new data is arrived with the mbHasNewMessage flag
    *

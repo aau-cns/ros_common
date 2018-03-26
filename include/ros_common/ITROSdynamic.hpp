@@ -18,7 +18,12 @@
 namespace ros_common
 {
 
-  // abstract template class
+  /**
+     * abstract template class
+     * Starts a dynamic reconfigure server for the configuration T.
+     * On a change the callback will store the latest value in mDynConfig
+     * and call the abstract update_() method in order to notify the child class
+     */
   template < typename T>
   class ITROSdynamic
   {
