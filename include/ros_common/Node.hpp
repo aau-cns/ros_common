@@ -47,46 +47,52 @@ namespace ros_common
         mbIsInitialized = false;
         mbHasNewMessage = false;
         mbSpinningProcess = false;
+        mbProfile = true;
       }
 
     public:
       void run();
-
-      void setProfiling(const bool val);
-      bool isInitialized();
+      void set_profile(const bool val);
+      bool is_initialized();
 
     protected:
+
       /**
-       * subscribe and publish topics, initialize message independet stuff
+       * 1) subscribe and publish topics, initialize message independet stuff
        */
       virtual void init_topics() = 0;
 
       /**
-         * initialize node; called after first message received
+       * 2) loading configuration from ROS parameters
+       */
+      virtual void load_config() = 0;
+
+      /**
+         * 3) initialize node; called after first message received
          */
       virtual void init() = 0;
 
       /**
-         * process message. called when mbHasNewMessage was set
+         * 4) process message. called when mbHasNewMessage or mbSpinningProcess was set
          */
       virtual void process() = 0;
 
 
-      void _get_param_u32(std::string const &key, std::uint32_t &value, std::uint32_t const &def);
+      void get_param_u32(std::string const &key, std::uint32_t &value, std::uint32_t const &def);
 
-      void _get_param_s16(std::string const &key, std::int16_t &value, std::int16_t const &def);
+      void get_param_s16(std::string const &key, std::int16_t &value, std::int16_t const &def);
 
-      void _param_get_string(std::string &variable, std::string const &param, std::string const &default_value);
+      void param_get_string(std::string &variable, std::string const &param, std::string const &default_value);
 
-      void _param_get_int(int &variable, std::string const &param, int const &default_value);
+      void param_get_int(int &variable, std::string const &param, int const &default_value);
 
-      void _param_get_uint(unsigned &variable, std::string const &param, unsigned const &default_value);
+      void param_get_uint(unsigned &variable, std::string const &param, unsigned const &default_value);
 
-      void _param_get_float(float &variable, std::string const &param, float const &default_value);
+      void param_get_float(float &variable, std::string const &param, float const &default_value);
 
       template<typename T>
-      void _param_check_range(T &variable, std::string const &param_name, T const &min, T const &max,
-                              T const &default_value)
+      void param_check_range(T &variable, std::string const &param_name, T const &min, T const &max,
+                             T const &default_value)
       {
         if(variable < min || variable > max)
         {
@@ -104,7 +110,7 @@ namespace ros_common
       std::atomic<bool> mbSpinningProcess;  // for a node that does the process loop iteratively without new messages
       float mPeriod_s;
 
-      bool mbProfile = true;
+      std::atomic<bool> mbProfile;
 
     private:
       std::atomic<bool> mbIsInitialized;
@@ -118,7 +124,7 @@ namespace ros_common
       /**
        * Print all subscritpions and advertations
        */
-      void printTopicInfo();
+      void print_topic_info();
 
   };
 
