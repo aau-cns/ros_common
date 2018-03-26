@@ -16,27 +16,37 @@
 #include <functional>
 #include <string>
 #include <ros/ros.h>
+#include <atomic>
 
 namespace ros_common
 {
+
+  /**
+     * Template class to wait for a specific ROS topic to be received.
+     *
+     */
+
   template<typename T>
   class InitSubscriber
   {
 
     private:
-      std::string     mTopic;
-      ros::NodeHandle mNh;
-      ros::Subscriber mSub;
-      bool            mReceived;
+      std::string        mTopic;
+      ros::NodeHandle    mNh;
+      ros::Subscriber    mSub;
+      std::atomic<bool>  mbReceived;
     public:
       T data;
       boost::shared_ptr< T const> ptrData;
 
-      InitSubscriber(ros::NodeHandle &nh) : mReceived(false), mNh(nh)
-      { }
-
-      InitSubscriber(ros::NodeHandle &nh, std::string const &topic) : mReceived(false), mNh(nh), mTopic(topic)
+      InitSubscriber(ros::NodeHandle &nh) :  mNh(nh)
       {
+        mbReceived = false;
+      }
+
+      InitSubscriber(ros::NodeHandle &nh, std::string const &topic) : mNh(nh), mTopic(topic)
+      {
+        mbReceived = false;
         subscribe();
       }
 
@@ -45,7 +55,7 @@ namespace ros_common
         ptrData = msg;
         data = *msg;
         mSub.shutdown();
-        mReceived = true;
+        mbReceived = true;
       }
 
       void subscribe(std::string const &topic = "")
@@ -54,18 +64,21 @@ namespace ros_common
         {
           mTopic = topic;
         }
-        mReceived = false;
+        mbReceived = false;
         mSub      = mNh.subscribe<T>(mTopic, 1, boost::bind(&InitSubscriber<T>::callback, this, _1));
         ROS_INFO("InitSubscriber: subscribed topic %s", mTopic.c_str());
       }
 
-      void waitForMessage()
+      void waitForMessage(double rate_Hz = 10.0)
       {
         ROS_INFO("Waiting for message: %s", mTopic.c_str());
-        while (!mReceived)
+
+        ros::Rate    rate(rate_Hz);
+        while (!mbReceived)
         {
           usleep(100000);
           ros::spinOnce();
+          rate.sleep();
         }
         ROS_INFO(" ... received message");
       }

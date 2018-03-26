@@ -94,15 +94,6 @@ void ros_common::INode::run()
   }
 }
 
-void ros_common::INode::set_profile(const bool val)
-{
-  mbProfile = val;
-}
-
-bool ros_common::INode::is_initialized()
-{
-  return mbIsInitialized;
-}
 
 void ros_common::INode::get_param_u32(const std::string &key, std::uint32_t &value, const std::uint32_t &def)
 {

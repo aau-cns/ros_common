@@ -54,8 +54,6 @@ namespace ros_common
 
     public:
       void run();
-      void set_profile(const bool val);
-      bool is_initialized();
 
     protected:
 
@@ -65,7 +63,7 @@ namespace ros_common
       virtual void init_topics() = 0;
 
       /**
-       * 2) loading configuration from ROS parameters
+       * 2) loading private ROS parameters
        */
       virtual void load_config() = 0;
 
@@ -112,10 +110,10 @@ namespace ros_common
       std::atomic<bool> mbSpinningProcess;  // for a node that does the process loop iteratively without new messages
       float mPeriod_s;
 
-      std::atomic<bool> mbProfile;
 
     private:
-      std::atomic<bool> mbIsInitialized;
+      bool mbProfile;
+      bool mbIsInitialized;
 
       INode();
 
