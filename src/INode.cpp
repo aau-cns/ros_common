@@ -28,20 +28,19 @@ void ros_common::INode::run()
   ros::Time processTimeStart;
 
   // callback spinning rate
-  int spinningRate; // Hz
-  mNh.param<int>("node_spinning_rate", spinningRate, 50);
+  double spinningRate;  // Hz
+  mNh.param<double>("node_spinning_rate", spinningRate, 50.0);
 
   // warning message
-  int warnAfter_s; //s
-  mNh.param<int>("node_warn_time", warnAfter_s, 15);
+  double warnAfter_s;  // s
+  mNh.param<double>("node_warn_time", warnAfter_s, 15.0);
 
-
-  unsigned int emptySpinCnt     = 0;
-  unsigned int  warningEmptySpin = spinningRate * warnAfter_s;
+  double emptySpinCnt = 0;
+  double warningEmptySpin = spinningRate * warnAfter_s;
 
   if(warningEmptySpin == 0)
   {
-    warningEmptySpin = std::numeric_limits<unsigned>::max();
+    warningEmptySpin = std::numeric_limits<double>::max();
   }
 
   ros::Rate    rate(spinningRate);
@@ -85,7 +84,7 @@ void ros_common::INode::run()
 
       if(emptySpinCnt >= warningEmptySpin)
       {
-        ROS_WARN("No message received in the last %d s", warnAfter_s);
+        ROS_WARN("No message received in the last %f s", warnAfter_s);
         emptySpinCnt = 0;
       }
     }
