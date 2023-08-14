@@ -3,9 +3,9 @@
  *
  * @file  INode.hpp
  *
- * @brief  refactored pfe_node.h
+ * @brief  abstract baseclass for node with custom spinning
  *
- * @author  Roland Jung
+ * @author  Roland Jung (Roland.Jung@ieee.org)
  *
  * @date  14.12.2016
  */

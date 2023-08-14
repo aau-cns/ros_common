@@ -6,7 +6,7 @@
  *
  * @brief
  *
- * @author  Roland Jung
+ * @author  Roland Jung (Roland.Jung@ieee.org)
  *
  * @date  14.12.2016
  */

@@ -1,12 +1,12 @@
 /**
- * Copyright (C) 2016 by Austrian Institute of Technology
+ * @licence MIT
  *
  * @file  ITROSdynamic.hpp
  *
  * @brief Automatically binds the dynamic reconfig server with the concrete callback.
  *        The user needs to implement update_(...) which updates the internal states.
  *
- * @author  Roland Jung (Roland.Jung@aau.at)
+ * @author  Roland Jung (Roland.Jung@ieee.org)
  *
  * @date  19.10.2016
  */
@@ -37,11 +37,11 @@ namespace ros_common
 
       void callback(T &config, uint32_t level)
       {
-        ROS_INFO("received reconfigure request:");
+        ROS_DEBUG("ITROSdynamic::callback(): reconfigure request receiver.");
         mDynConfig = config;  //read
         if(!update_() )       // modify
         {
-          ROS_INFO("--> failed!");
+          ROS_WARN("ITROSdynamic::callback(): config update failed!");
         }
         config = mDynConfig;  // write
       }
