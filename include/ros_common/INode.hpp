@@ -48,6 +48,7 @@ namespace ros_common
         mbIsInitialized = false;
         mbHasNewMessage = false;
         mbSpinningProcess = false;
+        mbStopProcess = false;
         mbProfile = true;
       }
 
@@ -104,11 +105,13 @@ namespace ros_common
 
       ros::NodeHandle mNh;
 
+      std::atomic<bool> mbHasNewMessage = {false};
+      std::atomic<bool> mbSpinningProcess
+        = {true};  // for a node that does the process loop iteratively without new messages
+      std::atomic<bool> mbStopProcess
+        = {false};  // for a node that does the process loop iteratively without new messages
 
-      std::atomic<bool> mbHasNewMessage;
-      std::atomic<bool> mbSpinningProcess;  // for a node that does the process loop iteratively without new messages
       float mPeriod_s;
-
 
     private:
       bool mbProfile;

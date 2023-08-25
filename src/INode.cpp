@@ -45,8 +45,9 @@ void ros_common::INode::run()
 
   ros::Rate    rate(spinningRate);
 
-  while (ros::ok())
-  {
+  while (ros::ok() && !mbStopProcess) {
+    // ref: http://wiki.ros.org/roscpp/Overview/Callbacks%20and%20Spinning
+    // will call all the callbacks waiting to be called at that point in time.
     ros::spinOnce();
 
     if(mbHasNewMessage || mbSpinningProcess)
@@ -77,9 +78,7 @@ void ros_common::INode::run()
 
       mbHasNewMessage = false; // message is processed
       emptySpinCnt   = 0;
-    }
-    else
-    {
+    } else if (!mbSpinningProcess) {
       emptySpinCnt++;
 
       if(emptySpinCnt >= warningEmptySpin)
