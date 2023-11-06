@@ -1,14 +1,15 @@
-/**
- * @licence MIT
+/******************************************************************************
+ * FILENAME:     INode.hpp
+ * PURPOSE:      Abstract baseclass for a node with custom spinning order of execution of virtual methods.
+ * AUTHOR:       jungr
+ * MAIL:         roland.jung@ieee.org
+ * VERSION:      v0.0.1
+ * LICENCE       MIT
+ * CREATION:     14.12.2018
  *
- * @file  INode.hpp
- *
- * @brief  abstract baseclass for node with custom spinning
- *
- * @author  Roland Jung (Roland.Jung@ieee.org)
- *
- * @date  14.12.2016
- */
+ *  Copyright (C) 2018 Roland Jung, Control of Networked Systems, University of Klagenfurt, Austria.
+ *  All rights reserved. See the LICENSE file for details.
+ ******************************************************************************/
 #ifndef ROS_COMMON_INODE_HPP
 #define ROS_COMMON_INODE_HPP
 #include <cassert>

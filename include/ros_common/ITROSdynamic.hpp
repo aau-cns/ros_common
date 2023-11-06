@@ -1,15 +1,17 @@
-/**
- * @licence MIT
+/******************************************************************************
+ * FILENAME:     INode.hpp
+ * PURPOSE:      Automatically binds the dynamic reconfig server with the concrete callback.
+ *               The user needs to implement update_(...) which updates the internal states.
+ * AUTHOR:       jungr
+ * MAIL:         roland.jung@ieee.org
+ * VERSION:      v0.0.1
+ * LICENCE       MIT
+ * CREATION:     19.10.2018
  *
- * @file  ITROSdynamic.hpp
- *
- * @brief Automatically binds the dynamic reconfig server with the concrete callback.
- *        The user needs to implement update_(...) which updates the internal states.
- *
- * @author  Roland Jung (Roland.Jung@ieee.org)
- *
- * @date  19.10.2016
- */
+ *  Copyright (C) 2018 Roland Jung, Control of Networked Systems, University of Klagenfurt, Austria.
+ *  All rights reserved. See the LICENSE file for details.
+ ******************************************************************************/
+
 #ifndef ROS_COMMON_ITROSDYNAMIC_HPP
 #define ROS_COMMON_ITROSDYNAMIC_HPP
 

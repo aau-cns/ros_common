@@ -1,15 +1,15 @@
-/**
- * @licence MIT
+/******************************************************************************
+ * FILENAME:     InitSubscriber.hpp
+ * PURPOSE:      Subscribs a topic and wait for a single message.
+ * AUTHOR:       jungr
+ * MAIL:         roland.jung@ieee.org
+ * VERSION:      v0.0.1
+ * LICENCE       MIT
+ * CREATION:     14.12.2018
  *
- * @file  InitSubscriber.hpp
- *
- * @brief  subscribs a topic and wait for a single message.
- *         refactore init_subscriber.h
- *
- * @author  Roland Jung (Roland.Jung@ieee.org)
- *
- * @date  14.12.2016
- */
+ *  Copyright (C) 2018 Roland Jung, Control of Networked Systems, University of Klagenfurt, Austria.
+ *  All rights reserved. See the LICENSE file for details.
+ ******************************************************************************/
 #ifndef ROS_COMMON_INITSUBSCRIBER_HPP
 #define ROS_COMMON_INITSUBSCRIBER_HPP
 
