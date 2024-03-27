@@ -15,6 +15,16 @@
 
 void ros_common::INode::run()
 {
+  bool asyncCallbacks;  // s
+  mNh.param<bool>("async_callbacks", asyncCallbacks, false);
+
+  std::shared_ptr<ros::AsyncSpinner> pSpinner;
+  if(asyncCallbacks)
+  {
+    pSpinner.reset(new ros::AsyncSpinner(0));
+    pSpinner->start();
+  }
+
   init_topics();  // 1
   print_topic_info();
   load_config();  // 2
@@ -35,6 +45,8 @@ void ros_common::INode::run()
   double warnAfter_s;  // s
   mNh.param<double>("node_warn_time", warnAfter_s, 15.0);
 
+
+
   double emptySpinCnt = 0;
   double warningEmptySpin = spinningRate * warnAfter_s;
 
@@ -46,10 +58,14 @@ void ros_common::INode::run()
   ros::Rate    rate(spinningRate);
 
   while (ros::ok() && !mbStopProcess) {
-    // ref: http://wiki.ros.org/roscpp/Overview/Callbacks%20and%20Spinning
-    // will call all the callbacks waiting to be called at that point in time.
-    ros::spinOnce();
 
+    if(!asyncCallbacks)
+    {
+      // ref: http://wiki.ros.org/roscpp/Overview/Callbacks%20and%20Spinning
+      // will call all the callbacks waiting to be called at that point in time.
+
+      ros::spinOnce();
+    }
     if(mbHasNewMessage || mbSpinningProcess)
     {
       if(!mbIsInitialized)
@@ -72,7 +88,7 @@ void ros_common::INode::run()
 
         double        process_hz  = (processTime.toSec() > 0) ? 1 / processTime.toSec() : 0;
         double        period_hz   = (mPeriod_s) ? 1 / mPeriod_s : 0;
-        ROS_INFO("process() %fs (%f Hz), overhead %fs, (%f Hz)", processTime.toSec(), process_hz,
+        ROS_INFO_THROTTLE(1, "process() %fs (%f Hz), overhead %fs, (%f Hz)", processTime.toSec(), process_hz,
                  overheadTime.toSec(), period_hz);
       }
 
@@ -90,6 +106,12 @@ void ros_common::INode::run()
 
     rate.sleep();
   }
+
+  if(asyncCallbacks)
+  {
+    pSpinner->stop();
+  }
+
 }
 
 
