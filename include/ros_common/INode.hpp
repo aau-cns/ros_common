@@ -102,6 +102,52 @@ namespace ros_common
         }
       }
 
+      template <class T>
+      void param_get_Eigen_mat(T &variable, const std::string &param, const T &default_value) {
+        // Load a squared Eigen::Matrix from the launch file/parameter server
+        variable.setZero();
+        ROS_ASSERT(variable.rows() == variable.cols());
+
+        XmlRpc::XmlRpcValue config;
+
+        if (mNh.hasParam(param)) {
+          try {
+            mNh.getParam(param, config);
+
+            ROS_ASSERT(processNoiseCovarConfig.getType() == XmlRpc::XmlRpcValue::TypeArray);
+
+            int matSize = variable.rows();
+
+            for (int i = 0; i < matSize; i++) {
+              for (int j = 0; j < matSize; j++) {
+                try {
+                  // These matrices can cause problems if all the types
+                  // aren't specified with decimal points. Handle that
+                  // using string streams.
+                  std::ostringstream ostr;
+                  ostr << config[matSize * i + j];
+                  std::istringstream istr(ostr.str());
+                  istr >> variable(i, j);
+                } catch (const std::exception &e) {
+                  ROS_ERROR_STREAM("ERROR reading config: " << e.what() << " for " << param
+                                                            << " (type: " << config.getType() << ")");
+                  throw e;
+                } catch (...) {
+                  throw;
+                }
+              }
+            }
+
+          } catch (const std::exception &e) {
+            ROS_ERROR_STREAM("ERROR reading config: " << e.what() << " for " << param << " (type: " << config.getType()
+                                                      << ")");
+          }
+        } else {
+          ROS_WARN_STREAM("Param: " << param << " not available!");
+          variable = default_value;
+        }
+      }
+
       /// MEMBERS:
 
       ros::NodeHandle mNh;
