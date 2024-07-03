@@ -55,8 +55,21 @@ void ros_common::INode::run()
     warningEmptySpin = std::numeric_limits<double>::max();
   }
 
-  ros::Rate    rate(spinningRate);
+  // Some Info
+  if (mbSpinningProcess) {
+    ROS_INFO_STREAM("* Process is spinning at " << spinningRate << " Hz");
+  } else {
+    ROS_INFO("* Process not spinning. Waits for mbHasNewMessage flag!");
+  }
 
+  if (asyncCallbacks) {
+    ROS_INFO("* Callbacks are processed asynchronously!");
+  }
+  if (mbProfile) {
+    ROS_INFO("* Profiling node!");
+  }
+
+  ros::Rate rate(spinningRate);
   while (ros::ok() && !mbStopProcess) {
 
     if(!asyncCallbacks)

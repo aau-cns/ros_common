@@ -39,7 +39,7 @@ namespace ros_common
 
       void callback(T &config, uint32_t level)
       {
-        ROS_DEBUG("ITROSdynamic::callback(): reconfigure request receiver.");
+        ROS_DEBUG_STREAM("ITROSdynamic::callback(): reconfigure request receiver at level=" + std::to_string(level));
         mDynConfig = config;  //read
         if(!update_() )       // modify
         {
