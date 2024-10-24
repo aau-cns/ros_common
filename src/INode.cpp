@@ -34,8 +34,8 @@ void ros_common::INode::run()
   mNh.param<bool>("node_profile", tmp, true);
   mbProfile = tmp;
 
-  ros::Time processTimeStop;
-  ros::Time processTimeStart;
+  ros::Time processTimeStop = ros::Time::now();
+  ros::Time processTimeStart = ros::Time::now();
 
   // callback spinning rate
   double spinningRate;  // Hz
@@ -98,11 +98,11 @@ void ros_common::INode::run()
 
       if(mbProfile)
       {
-
+        // TODO: these values need to be averages: if spin rate is 100Hz and Throttle 1s -> average of last 100 samples!
         double        process_hz  = (processTime.toSec() > 0) ? 1 / processTime.toSec() : 0;
         double        period_hz   = (mPeriod_s) ? 1 / mPeriod_s : 0;
-        ROS_INFO_THROTTLE(1, "process() %fs (%f Hz), overhead %fs, (%f Hz)", processTime.toSec(), process_hz,
-                 overheadTime.toSec(), period_hz);
+        ROS_INFO_THROTTLE(1, "process() %.4fs (%.1f Hz), overhead %.4fs, (%.1f Hz)", processTime.toSec(), process_hz,
+                          overheadTime.toSec(), period_hz);
       }
 
       mbHasNewMessage = false; // message is processed
