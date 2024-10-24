@@ -114,7 +114,7 @@ namespace ros_common
           try {
             mNh.getParam(param, config);
 
-            ROS_ASSERT(processNoiseCovarConfig.getType() == XmlRpc::XmlRpcValue::TypeArray);
+            ROS_ASSERT(config.getType() == XmlRpc::XmlRpcValue::TypeArray);
 
             int matSize = variable.rows();
 
